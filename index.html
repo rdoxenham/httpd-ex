@@ -729,7 +729,7 @@ size through OpenShift itself.</p>
 <p>In this exercise we&#39;re going to manually add worker nodes to our cluster:</p>
 
 <ol>
-<li><p>Go to the OpenShift web console and login with <code>kubeadmin</code> (or your admin
+<li><p>If you're not already logged in, go to the OpenShift web console and login with <code>admin</code> (or your admin
 username if different)</p></li>
 <li><p>Browse to <code>Machines</code> on the left-hand side-bar, and click <code>Machine Sets</code>.</p></li>
 <li><p>On the <code>Machine Sets</code> page, select <code>openshift-machine-api</code> from the <code>Project</code>
@@ -738,10 +738,6 @@ dropdown and you should see the machine sets:</p>
 <p><center><img src="img/machine-set.png"/></center></p></li>
 <li><p>Select one of the machine sets in the list by clicking on the name, e.g.
 &quot;<strong>beta-190305-1-79tf5-worker-us-east-1a</strong>&quot; (yours will be slightly different)</p></li>
-<li><p>Go to the OpenShift web console and login with <code>kubeadmin</code>. </p></li>
-<li><p>Browse to <code>Machines</code> in the side-bar, and click <code>Machine Sets</code>. </p></li>
-<li><p>On the <code>Machine Sets</code> page, select <code>openshift-machine-api</code> from the
-<code>Project</code> dropdown.</p></li>
 <li><p>Select a worker set to scale by clicking it.</p>
 
 <blockquote>
@@ -984,7 +980,7 @@ $ sed -i s/\&lt;clusterid\&gt;/$CLUSTER_NAME/g machine-autoscale-example.yaml</c
 
 <blockquote>
 <p><strong>NOTE</strong>: If you aren&#39;t deployed into this region, or don&#39;t want to use
-us-east-1a, adapt the instructions to suit.</p>
+us-east-1a, adapt the instructions to suit. If you're at the APAC SKO this is <strong>ap-southeast-1</strong></p>
 </blockquote>
 
 <p><strong>Make sure</strong> that you properly modify both <code>generateName</code> and <code>name</code>. Note
