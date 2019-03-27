@@ -968,31 +968,19 @@ spec:
     name: beta-190305-1-79tf5-worker-us-east-1a
 ...</code></pre></div>
 
-<p>To ensure you make no mistakes:</p>
+<p>There are three <code>MachineAutoscaler</code> resources in the example, one for each availability zone currently in use. Each of the <code>&lt;aws-region-az&gt;</aws-region-az></code> instances should be replaced by one of the three zones in use by your cluster, being sure to use the same zone in both the <code>generateName</code> and <code>name</code> field of a particular <code>MachineAutoscaler</code>.</p>
+
+<p>The cluster ID substitution can be automated with the following
+commands:</p>
 
 <div><pre><code class="language-bash">$ export CLUSTER_NAME=$(oc get machinesets -n openshift-machine-api | awk -F&#39;-worker-&#39; &#39;NR&gt;1{print $1;exit;}&#39;)
-$ export REGION_NAME=us-east-1a
-
-$ sed -i s/\&lt;aws-region-az\&gt;/$REGION_NAME/g machine-autoscale-example.yaml
 $ sed -i s/\&lt;clusterid\&gt;/$CLUSTER_NAME/g machine-autoscale-example.yaml</code></pre></div>
-
-<blockquote>
-<p><strong>NOTE</strong>: If you aren&#39;t deployed into this region, or don&#39;t want to use
-us-east-1a, adapt the instructions to suit. If you're at the APAC SKO this is <strong>ap-southeast-1</strong></p>
-</blockquote>
 
 <p><strong>Make sure</strong> that you properly modify both <code>generateName</code> and <code>name</code>. Note
 which one has the <code>&lt;clusterid&gt;</code> and which one does not. Note that
 <code>generateName</code> has a trailing hyphen. You can specify the minimum and maximum
 quantity of nodes that are allowed to be created by adjusting the
 <code>minReplicas</code> and <code>maxReplicas</code>.</p>
-
-<p>You do not have to define a <code>MachineAutoScaler</code> for each <code>MachineSet</code>. But
-remember that each <code>MachineSet</code> corresponds to an AWS region/AZ. So, without
-having multiple <code>MachineAutoScalers</code>, you could end up with a cluster fully
-scaled out in a single AZ. If that&#39;s what you&#39;re after, it&#39;s fine. However if
-AWS has a problem in that AZ, you run the risk of losing a large portion of
-your cluster.</p>
 
 <blockquote>
 <p><strong>NOTE</strong>: You should probably choose a small-ish number for <code>maxReplicas</code>. The
@@ -1005,8 +993,8 @@ autoscaler:</p>
 
 <div><pre><code class="language-bash">$ oc create -f machine-autoscale-example.yaml -n openshift-machine-api
 machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-t6m9k created
-machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-vr59k created
-machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-zkt5t created</code></pre></div>
+machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1b-vr59k created
+machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1c-zkt5t created</code></pre></div>
 
 <h3 id="toc_12">Define a <code>ClusterAutoscaler</code></h3>
 
@@ -1198,7 +1186,7 @@ cluster-8145-5nvqd-worker-ap-southeast-1a   1         1         1         1     
 cluster-8145-5nvqd-worker-ap-southeast-1b   1         1         1         1           12h
 cluster-8145-5nvqd-worker-ap-southeast-1c   1         1         1         1           12h</code></pre></div>
 
-<p>Here we have three distinct machine sets deployed, each with a <strong>single</strong> machine running. Each machine set is aligned with a given AWS EC2 availability zone, and we could easily deploy additional machines (or nodes) into one of the three listed (<code>1a</code>, <code>1b</code> and <code>1c</code>). 
+<p>Here we have three distinct machine sets deployed, each with a <strong>single</strong> machine running. Each machine set is aligned with a given AWS EC2 availability zone, and we could easily deploy additional machines (or nodes) into one of the three listed (<code>1a</code>, <code>1b</code> and <code>1c</code>).
 If we wanted to add additional capacity to our cluster we could adjust the replica count like we did in the previous lab, remembering that we randomly selected one of the machine sets in the overall configuration, but that&#39;s just for worker nodes, i.e. where our user applications run, and where <strong>some</strong> of the key infrastructure components run by default, e.g. our routers, etc.</p>
 
 <p>If we wanted to create a dedicated infrastructure role where we could run specific infrastructure services, components, and pods on (and move them away from the <strong>worker</strong> nodes like they are by default), we would need to create an additional set of nodes, define a <code>MachineSet</code> to deploy and scale them into, and then label them with specific <strong>kubernetes labels</strong>. We can then configure the various components to run specifically on nodes with those labels.</p>
@@ -1926,10 +1914,10 @@ the cluster through the Developer Catalog.</p>
 
 <ul>
 <li>Red Hat Products - licensed software that is tested extensively on OpenShift 4.</li>
-<li>Certified Partners - partners that have certified their applications for 
-OpenShift and have established a mutual support SLA with Red Hat, in order to 
+<li>Certified Partners - partners that have certified their applications for
+OpenShift and have established a mutual support SLA with Red Hat, in order to
 provide you with the best experience.</li>
-<li>Community - a set of curated Operators built by the Kubernetes community and 
+<li>Community - a set of curated Operators built by the Kubernetes community and
 work well with the Operator Lifecycle Management software already installed
 on your cluster.</li>
 </ul>
@@ -2206,7 +2194,7 @@ Couchbase via the web console, or you can use:</p>
 <p>A few things will happen:</p>
 
 <ul>
-<li>The Operator will detect the difference between the desired state and the 
+<li>The Operator will detect the difference between the desired state and the
 current state</li>
 <li>A new Pod will be created and show up under &quot;Resources&quot;</li>
 <li>The Couchbase dashboard will show 4 instances once the Pod is created</li>
@@ -2758,10 +2746,10 @@ metadata:
   name: cluster
 spec:
   identityProviders:
-  - name: my_htpasswd_provider 
-    challenge: true 
-    login: true 
-    mappingMethod: claim 
+  - name: my_htpasswd_provider
+    challenge: true
+    login: true
+    mappingMethod: claim
     type: HTPasswd
     htpasswd:
       fileData:
