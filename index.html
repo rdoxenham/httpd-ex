@@ -2698,7 +2698,7 @@ cluster, you must configure an authentication provider. In this example we will 
 
 <p>Let&#39;s first create the <code>htpasswd</code> file manually; there&#39;s a number of ways that this can be done but an easy way is to use <code>openssl</code> to do this for us:</p>
 
-<div><pre><code class="language-bash">$ printf &quot;sko2019:$(openssl passwd -apr1 openshift4)\n&quot; &gt;&gt; ~/htpasswd&quot;</code></pre></div>
+<div><pre><code class="language-bash">$ printf &quot;sko2019:$(openssl passwd -apr1 openshift4)\n&quot; &gt;&gt; ~/htpasswd</code></pre></div>
 
 <p>This will create a user called &quot;<strong>sko2019</strong>&quot; with password &quot;<strong>openshift4</strong>&quot;.</p>
 
