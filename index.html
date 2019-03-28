@@ -1332,9 +1332,9 @@ rules for creating one, at least for a simple change like we&#39;re making:</p>
 
 <ol>
 <li>Don&#39;t change anything in the <code>providerSpec</code></li>
-<li>Don&#39;t change any instances of <code>sigs.k8s.io/cluster-api-cluster: &lt;clusterid&gt;</code></li>
+<li>Don&#39;t change any instances of <code>machine.openshift.io/cluster-api-cluster: &lt;clusterid&gt;</code></li>
 <li>Give your <code>MachineSet</code> a unique <code>name</code></li>
-<li>Make sure any instances of <code>sigs.k8s.io/cluster-api-machineset</code> match the <code>name</code></li>
+<li>Make sure any instances of <code>machine.openshift.io/cluster-api-machineset</code> match the <code>name</code></li>
 <li>Add labels you want on the nodes to <code>.spec.template.spec.metadata.labels</code></li>
 <li>Even though you&#39;re changing <code>MachineSet</code> <code>name</code> references, be sure not to change the <code>subnet</code>.</li>
 </ol>
@@ -1382,7 +1382,7 @@ availability zone. Ultimately, you can call this anything you like, but we shoul
 
 <h3 id="toc_25">Match It</h3>
 
-<p>Change any instance of <code>sigs.k8s.io/cluster-api-machineset</code> to match your new
+<p>Change any instance of <code>machine.openshift.io/cluster-api-machineset</code> to match your new
 name of <code>infrastructure-ap-southeast-1a</code> (or whatever you&#39;re using). This appears in both
 <code>.spec.selector.matchLabels</code> as well as <code>.spec.template.metadata.labels</code>.</p>
 
