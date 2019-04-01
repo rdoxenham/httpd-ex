@@ -5,7 +5,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>SKO 2019 OCP4 Hands-On</title>
+<title>OpenShift 4 Hands-on Training</title>
 
 
 <style type="text/css">
@@ -330,41 +330,59 @@ kbd {
 
 <p><img src="img/redhat.png" style="width: 350px;" border=0/></p>
 
-<h2>Hands-on with OpenShift 4.0 (SKO March 2019)</h2>
+<h2>Hands-on Training with OpenShift 4 (Self-paced) - April 2019</h2>
+
+<p><strong>Authors</strong>:</p>
+
+<ul>
+<li>Rhys Oxenham &lt;<a href="mailto:roxenham@redhat.com">roxenham@redhat.com</a>&gt;</li>
+<li>Erik Jacobs &lt;<a href="mailto:ejacobs@redhat.com">ejacobs@redhat.com</a>&gt;</li>
+<li>James Falkner &lt;<a href="mailto:jfalkner@redhat.com">jfalkner@redhat.com</a>&gt;</li>
+</ul>
 
 <h1 id="toc_0"><strong>Lab Overview</strong></h1>
 
-<p>Firstly, welcome to the Red Hat Sales Kick Off 2019! The past few years have been an exciting time for both Red Hat and the OpenShift community; we&#39;ve seen unprecedented interest and development in this new revolutionary technology and we&#39;re proud to be at the heart of it all. Red Hat is firmly committed to the future of OpenShift, Kubernetes, and the surrounding technologies; our goal is to continue to enhance the technology, make it more readily consumable and to enable our customers to be successful when using it.</p>
+<p>Firstly, welcome to the hands-on technical training for OpenShift 4! The past few years have been an exciting time for both Red Hat and the OpenShift community; we&#39;ve seen unprecedented interest and development in this new revolutionary technology and we&#39;re proud to be at the heart of it all. Red Hat is firmly committed to the future of OpenShift, Kubernetes, and the surrounding technologies; our goal is to continue to enhance the technology, make it more readily consumable and to enable our customers to be successful when using it.</p>
 
-<p>We&#39;ve prepared some materials to get you familiar with Red Hat OpenShift Container Platform 4.0, which is currently in a pre-release state (expected to be GA&#39;d at Summit 2019 time frame as 4.1). This hands-on lab aims to get you, the attendees, a bit closer to Red Hat OpenShift Container Platform. It&#39;s comprised of a number of individual steps inside of this lab-guide that will run you through some of the more common tasks, such as investigation of the environment, application provisioning, network route creation, scaling the environment, and looking into over the air updates. We feel that giving you a hands-on overview of OpenShift will be a lot more beneficial than just delivering slideware. We want to make sure that you know how the components fit together, and how to use it. We will use a combination of command-line tools (oc) and interaction via the OpenShift Web Console.</p>
+<p>We&#39;ve prepared some materials to get you familiar with Red Hat OpenShift Container Platform 4.0, which is currently in a pre-release state (expected to be GA&#39;d at Summit 2019 time frame as 4.1). This hands-on lab aims to get you a bit closer to Red Hat OpenShift Container Platform. It&#39;s comprised of a number of individual steps inside of this lab-guide that will run you through some of the more common tasks, such as investigation of the environment, application provisioning, network route creation, scaling the environment, and looking into over the air updates. We feel that giving you a hands-on overview of OpenShift will be a lot more beneficial than just delivering slideware. We want to make sure that you know how the components fit together, and how to use it. We will use a combination of command-line tools (oc) and interaction via the OpenShift Web Console.</p>
 
 <p>Whilst you&#39;ll be asked to configure some fundamental components within OpenShift, you won&#39;t need to install OpenShift from scratch within this lab, we&#39;ve provided a pre-installed environment with a multi-node configuration for each of you to use individually, which has been deployed via the new openshift-installer technology that was inspired by the Tectonic installer from the CoreOS acquisition. In the next steps you&#39;ll be walked through getting access to a dedicated environment that is just for you, and we&#39;ll start by exploring the environment.</p>
 
-<p>If you have any problems at all or have any questions about Red Hat or our OpenShift offering, please put your hand-up and a lab moderator will be with you shortly to assist - we&#39;ve asked many of our OpenShift experts to be here today, so please make use of their time. If you have printed materials, they&#39;re yours to take away with you, otherwise this online copy will be available for the foreseeable future; I hope that they&#39;ll be useful assets in your OpenShift endeavours.</p>
+<p>If you have any problems at all or have any questions about Red Hat or our OpenShift offering, please get in touch with the <a href="mailto:field-engagement@redhat.com">Field &amp; Customer Engagement team</a>, and we&#39;ll be happy to provide timely assistance. These materials will continue to be updated over time as we add additional features and components, and we&#39;re always glad for pull-requests if you think something should be added, or you spot a typo. We hope that this guide will become a useful asset in your OpenShift endeavours.</p>
 
 <h1 id="toc_1">Connecting</h1>
 
-<p>You&#39;ll need to use your own laptop to connect into your (public cloud hosted) dedicated environment, and hopefully the WiFi will sustain so many connections. It&#39;s on this environment that you&#39;ll perform the later lab instructions, and you should only need a web-browser to complete all of the tasks, although some of you may prefer to also use your own built in terminal.</p>
+<p>We&#39;re using the Red Hat Product Demo Suite (RHPDS) for our labs, and therefore we need to request and get access to a unique environment based within the public cloud for you to use to complete the lab steps. If you&#39;re a Red Hat employee you&#39;ll need to follow these instructions to generate a session, othewise please get the connection details from your Red Hat representative and skip to the next section below.</p>
 
 <blockquote>
-<p><strong>NOTE</strong>: Those of you completing this in China may not be able to use your own terminal sessions unless you&#39;re also connected to the Red Hat VPN, this is due to the restricted internet connectivity in the People&#39;s Republic of China. That&#39;s why we have a fall-back option of using the web-browser for everything, including the instructions where you need to use a terminal session; this will become more obvious later down the line.</p>
+<p><strong>NOTE</strong>: Only proceed with the RHPDS creation instructions below if you&#39;re a Red Hat employee, or have been given access to RHPDS as a partner.</p>
 </blockquote>
 
-<p>To get started, we need to request your own dedicated session, for this we use a tool from GPTE called GuidGrabber. Open up your web-browser and click <a href="https://www.opentlc.com/gg/gg.cgi?profile=generic_sko" target="_blank">here</a> (https://www.opentlc.com/gg/gg.cgi?profile=generic_sko). What you should see is as follows, noting that if there&#39;s more than one lab shown in the drop-down box ensure you select <strong>&#39;lab1 - OpenShift 4.0 Sandbox&#39;</strong> and have entered the activation key &#39;<strong>sko2019</strong>&#39;, which you will need to do too:</p>
+<p>First you&#39;ll need to request a session via RHPDS, the WebUI (and associated login page) can be found at <a href="https://rhpds.redhat.com/" target="_blank">https://rhpds.redhat.com/</a>:</p>
 
-<p><img src="img/guid1.png" style="width: 1000px;"/></p>
+<p><img src="img/rhpds.png" style="width: 1000px;"/></p>
 
-<p>This will allocate a pre-deployed session for your usage with a <strong>GUID</strong> that&#39;s used to uniquely identify your session. Here&#39;s an example below:</p>
+<p>Once you&#39;ve logged in (if you don&#39;t have an account you <strong>need</strong> to register <a href="https://account.opentlc.com/account/requestAccessForm.php" target="_blank">here</a>), navigate to the service catalogue by selecting &#39;<strong>Services</strong>&#39; --&gt; &#39;<strong>Catalogs</strong>&#39;, then navigate to the correct lab which is in &#39;<strong>OpenShift Demos</strong>&#39; and &#39;<strong>OpenShift 4 Preview</strong>&#39; which should look like the following:</p>
 
-<p><img src="img/guid2.png" style="width: 1000px;"/></p>
+<p><img src="img/ocp4-rhpds.png" style="width: 1000px;"/></p>
 
-<p>You&#39;ll see that my assigned lab GUID is &#39;<strong>dd83</strong>&#39; and is used to uniquely identify my session, and is used as part of the connection address. There are a number of links that are displayed that we&#39;ll be using over the next few sections, e.g. a link to the OpenShift web-console along with credentials that you will need. </p>
+<p>Once you select &#39;<strong>Order</strong>&#39; you&#39;ll be presented with the following page which you&#39;ll need to accept some terms about the order time and the expiry (by selecting the check-box):</p>
 
-<blockquote>
-<p><strong>NOTE</strong>: If there are no credentials listed, use &quot;<strong>admin</strong>&quot; / &quot;<strong>r3dh4t1!</strong>&quot; for the username/password.</p>
-</blockquote>
+<p><img src="img/ocp4-order.png" style="width: 1000px;"/></p>
 
-<p>Next, let&#39;s login to the web-console and ensure that it&#39;s working as expected. Click on the link that says &quot;<strong>OpenShift Master Console</strong>&quot; from within the GuidGrabber webpage. After a couple of SSL errors (that you&#39;ll need to manually accept) you should be presented with the login page:</p>
+<p>Select <strong>&#39;Submit&#39;</strong> at the bottom of the page and it should generate the environment for you, and will show up in your requests:</p>
+
+<p><img src="img/ocp4-requests.png" style="width: 1000px;"/></p>
+
+<p>The RHPDS system will now generate a unique environment for you to use; this will take some time as it needs to provision all of the AWS instances, run the new openshift-installer, and then finally send you an email with some of the connection details (although expect a series of emails updating you with the progress). This process typically takes around 45minutes, so be prepared to wait around. The details that you&#39;ll be sent uniquely identify your session, see here for an example:</p>
+
+<p><img src="img/email-ocp4.png" style="width: 1000px;"/></p>
+
+<p>You&#39;ll notice that it contains some links, specifically the &quot;<strong>OpenShift Master Console</strong>&quot; (i.e. the web console for OpenShift) and the &quot;<strong>OpenShift API</strong>&quot; which is the endpoint for the &#39;oc&#39; client. In addition, there&#39;s some information around the expiry of the lab; please remember that Red Hat are paying the bill for these instances, so when you&#39;ve finished with this lab please retire the deployment in RHPDS... &#39;<strong>Services</strong>&#39; --&gt; &#39;<strong>My Services</strong>&#39; --&gt; &#39;<strong>Lifecycle</strong>&#39; --&gt; &#39;<strong>Retire this Service</strong>&#39;, but only do this once you&#39;ve finished!</p>
+
+<h1 id="toc_2">Verifying Connectivity</h1>
+
+<p>Next, let&#39;s login to the web-console and ensure that it&#39;s working as expected. Click on the link that says &quot;<strong>OpenShift Master Console</strong>&quot; from within the email from RHPDS. After a couple of SSL errors (that you&#39;ll need to manually accept) you should be presented with the login page:</p>
 
 <p><img src="img/console-login.png" style="width: 1000px;"/></p>
 
@@ -372,9 +390,9 @@ kbd {
 
 <p><img src="img/logged-in.png" style="width: 1000px;"/></p>
 
-<p>Now we&#39;re ready to proceed with the rest of our lab steps. If you had any problems getting access or if you have any questions, please feel free to ask any of the moderators at any time. If you lose your connection details you can return <a href="https://www.opentlc.com/gg/gg.cgi?profile=generic_sko" target="_blank">here</a> at any time.</p>
+<p>Now we&#39;re ready to proceed with the rest of our lab steps. If you had any problems getting access or if you have any questions, please feel free to ask any of the moderators at any time. If you lose your connection details you can refer to your RHPDS email at any time.</p>
 
-<h1 id="toc_2">Deploying the Web Terminal</h1>
+<h1 id="toc_3">Deploying the Web Terminal</h1>
 
 <p>In this section we&#39;re going to both deploying our first application, but also creating a web-browser based terminal session hosted by the OpenShift cluster that we&#39;ll be interacting with. We&#39;re doing this for two reasons, firstly to give you an experience of deploying a basic OpenShift application but also to avoid any connectivity or client issues you may be facing, depending on your geographical location or your local system configurations. We have a dedicated image that we&#39;ll deploy that has been pre-configured with everything we&#39;ll need, let&#39;s deploy that now.</p>
 
@@ -392,7 +410,9 @@ kbd {
 
 <p><img src="img/enter-image.png" style="width: 1000px;"/></p></li>
 <li><p>Leave &#39;workshop-terminal&#39; as the name for the image, we don&#39;t need to change that.</p></li>
+<li><p>Scroll down a bit and provide an environment variable. We need to set &quot;OC_VERSION&quot; to be &quot;4.0&quot; here as shown below:</p>
 
+<p><img src="img/env-var.png" style="width: 1000px;"/></p></li>
 <li><p>When you&#39;re done, click &#39;<strong>Deploy</strong>&#39;</p></li>
 <li><p>You will then be presented with a list of your applications, in there select &#39;workshop-terminal&#39; and you will be able to watch the deployment and await the pod to start, as below.</p>
 
@@ -416,7 +436,7 @@ kbd {
 <p><strong>NOTE</strong>: With OpenShift&#39;s integration with Amazon Web Services, when we create a route through the API or web-console, Amazon&#39;s Route 53 DNS service is dynamically updated for us, part of the key work we&#39;re doing to standardise the user experience across multiple different underlying platforms by abstracting the underlying functionality and complexity.</p>
 </blockquote>
 
-<h1 id="toc_3">Exploring the Cluster</h1>
+<h1 id="toc_4">Exploring the Cluster</h1>
 
 <p>Let&#39;s take some time to explore our new cluster. You now have two options, you can use your local terminal on your laptop, or you can use the browser-based terminal that we provisioned in the previous section. Due to connectivity challenges, especially in China, you may be forced to use the browser-based one, and for convenience our recommendation would be to use it. If you <strong>really</strong> want to configure your <strong>local</strong> client you can do so by using the following instructions to download the command line tooling. You should <strong>only</strong> do this if you don&#39;t want to use the browser-based terminal; make sure you run this on your local laptop and NOT within the web-browser.</p>
 
@@ -485,7 +505,7 @@ make sure to use the API endpoint and credentials that you were provided with.</
 <p>Now that your cluster is installed, you will have access to the web console and
 can use the CLI. Below are some command-line exercises to explore the cluster.</p>
 
-<h2 id="toc_4">Cluster Nodes</h2>
+<h2 id="toc_5">Cluster Nodes</h2>
 
 <p>The default installation behavior creates 6 nodes: 3 masters and 3 &quot;worker&quot;
 application/compute nodes. You can view them with:</p>
@@ -518,7 +538,7 @@ scheduling, e.g. make sure that my application (or pod) resides on a specific
 system type. The labels shown above are utilising the default labels, but it&#39;s
 possible to set some custom labels in the form of a key-value pair.</p>
 
-<h2 id="toc_5">The Cluster Operator</h2>
+<h2 id="toc_6">The Cluster Operator</h2>
 
 <p>The cluster version operator is the core of what defines an OpenShift deployment
 . The cluster version operator pod(s) contains the set of manifests which are
@@ -682,7 +702,7 @@ total 836
 that describe each of the operators and how they&#39;re applied. Feel free to take a
 look at some of these to give you an idea of what it&#39;s doing.</p>
 
-<div><pre><code class="language-bash">sh4.2# cat /release-manifests/0000_70_console-operator_00-crd-operator-config.yaml
+<div><pre><code class="language-bash">sh4.2# cat /release-manifests/0000_70_console-operator_00-crd.yaml
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -708,7 +728,7 @@ exit</code></pre></div>
 you can execute the following:</p>
 
 <div><pre><code class="language-bash">$ oc logs deployments/cluster-version-operator -n openshift-cluster-version &gt; operatorlog.txt
-$ cat operatorlog.txt
+$ ls operatorlog.txt
 I0306 10:28:10.548869       1 start.go:71] ClusterVersionOperator v4.0.0-0.139.0.0-dirty
 I0306 10:28:10.601159       1 start.go:197] Using in-cluster kube client config
 I0306 10:28:10.667401       1 leaderelection.go:185] attempting to acquire leader lease  openshift-cluster-version/version...
@@ -717,17 +737,17 @@ I0306 10:28:10.667401       1 leaderelection.go:185] attempting to acquire leade
 <p>The operator&#39;s log is <strong>extremely</strong> long, so it is recommended that you redirect
 it to a file instead of trying to look at it directly with the <code>logs</code> command.</p>
 
-<h1 id="toc_6">Scaling an OpenShift 4 Cluster</h1>
+<h1 id="toc_7">Scaling an OpenShift 4 Cluster</h1>
 
 <p>With OpenShift 4.0+, we now have the ability to dynamically scale the cluster
 size through OpenShift itself.</p>
 
-<h2 id="toc_7">Manual Cluster Scale Up/Down</h2>
+<h2 id="toc_8">Manual Cluster Scale Up/Down</h2>
 
 <p>In this exercise we&#39;re going to manually add worker nodes to our cluster:</p>
 
 <ol>
-<li><p>If you're not already logged in, go to the OpenShift web console and login with <code>admin</code> (or your admin
+<li><p>Go to the OpenShift web console and login with <code>kubeadmin</code> (or your admin
 username if different)</p></li>
 <li><p>Browse to <code>Machines</code> on the left-hand side-bar, and click <code>Machine Sets</code>.</p></li>
 <li><p>On the <code>Machine Sets</code> page, select <code>openshift-machine-api</code> from the <code>Project</code>
@@ -787,7 +807,7 @@ others, these are the ones that will have just been added in. Before continuing,
 scale back down by editing the count to whatever it was previously for the
 <code>Machine Set</code>, i.e. return it to &#39;1&#39; node.</p>
 
-<h3 id="toc_8">Note</h3>
+<h3 id="toc_9">Note</h3>
 
 <p>The default installation currently creates two routers, but they are on the
 same host. This is a known bug. It is possible that when you scale down your
@@ -804,7 +824,7 @@ router-default-dffd8548-vxtt8   1/1       Running   0          23h</code></pre><
 <p>If there is no router pod, or if it is in the <code>ContainerCreating</code> state, wait
 a little longer.</p>
 
-<h2 id="toc_9">Modifying via the CLI</h2>
+<h2 id="toc_10">Modifying via the CLI</h2>
 
 <p>You can alter the <code>Machine Set</code> count in several ways in the web UI console,
 but you can also perform the same operation via the CLI by using the <code>oc edit</code>
@@ -851,7 +871,7 @@ by specifying <code>EDITOR=&lt;your choice&gt;</code> before the <code>oc</code>
 <p>The above is just an excerpt of the entire machine set configuration - each
 machine set is listed in this file, but you&#39;ll need to change just one of the
 sets. In the above output you&#39;ll see an line with an arrow to signify where you
-can update the count - you&#39;ll need to change the <code>replicas: 1</code> to the count of
+can update the count - you&#39;ll need to change the <code>replica: 1</code> to the count of
 your choice. For this example I&#39;d recommend that you set it to &#39;2&#39;. To save your
 changes simply save and quit from your editor. OpenShift will now <strong>patch</strong> the
 configuration. You should see that your modified machine set (depending on which
@@ -878,7 +898,7 @@ beta-190305-1-79tf5-worker-us-east-1f   0         0                             
 <p>Again, before you move forward, return this count back to how it was before,
 using the same method as above.</p>
 
-<h2 id="toc_10">Automatic Cluster Scale Up</h2>
+<h2 id="toc_11">Automatic Cluster Scale Up</h2>
 
 <p>OpenShift can automatically scale the infrastructure based on workload provided
 there is a configuration specified to do so.  Before we begin, ensure that your
@@ -893,7 +913,7 @@ beta-190305-1-79tf5-worker-us-east-1d   0         0                             
 beta-190305-1-79tf5-worker-us-east-1e   0         0                               24h
 beta-190305-1-79tf5-worker-us-east-1f   0         0                               24h</code></pre></div>
 
-<h3 id="toc_11">Define a <code>MachineAutoScaler</code></h3>
+<h3 id="toc_12">Define a <code>MachineAutoScaler</code></h3>
 
 <p>Next, configure a <code>MachineAutoScaler</code> - you&#39;ll need to fetch the following YAML
 file:</p>
@@ -968,19 +988,31 @@ spec:
     name: beta-190305-1-79tf5-worker-us-east-1a
 ...</code></pre></div>
 
-<p>There are three <code>MachineAutoscaler</code> resources in the example, one for each availability zone currently in use. Each of the <code>&lt;aws-region-az&gt;</aws-region-az></code> instances should be replaced by one of the three zones in use by your cluster, being sure to use the same zone in both the <code>generateName</code> and <code>name</code> field of a particular <code>MachineAutoscaler</code>.</p>
-
-<p>The cluster ID substitution can be automated with the following
-commands:</p>
+<p>To ensure you make no mistakes:</p>
 
 <div><pre><code class="language-bash">$ export CLUSTER_NAME=$(oc get machinesets -n openshift-machine-api | awk -F&#39;-worker-&#39; &#39;NR&gt;1{print $1;exit;}&#39;)
+$ export REGION_NAME=us-east-1a
+
+$ sed -i s/\&lt;aws-region-az\&gt;/$REGION_NAME/g machine-autoscale-example.yaml
 $ sed -i s/\&lt;clusterid\&gt;/$CLUSTER_NAME/g machine-autoscale-example.yaml</code></pre></div>
+
+<blockquote>
+<p><strong>NOTE</strong>: If you aren&#39;t deployed into this region, or don&#39;t want to use
+us-east-1a, adapt the instructions to suit.</p>
+</blockquote>
 
 <p><strong>Make sure</strong> that you properly modify both <code>generateName</code> and <code>name</code>. Note
 which one has the <code>&lt;clusterid&gt;</code> and which one does not. Note that
 <code>generateName</code> has a trailing hyphen. You can specify the minimum and maximum
 quantity of nodes that are allowed to be created by adjusting the
 <code>minReplicas</code> and <code>maxReplicas</code>.</p>
+
+<p>You do not have to define a <code>MachineAutoScaler</code> for each <code>MachineSet</code>. But
+remember that each <code>MachineSet</code> corresponds to an AWS region/AZ. So, without
+having multiple <code>MachineAutoScalers</code>, you could end up with a cluster fully
+scaled out in a single AZ. If that&#39;s what you&#39;re after, it&#39;s fine. However if
+AWS has a problem in that AZ, you run the risk of losing a large portion of
+your cluster.</p>
 
 <blockquote>
 <p><strong>NOTE</strong>: You should probably choose a small-ish number for <code>maxReplicas</code>. The
@@ -993,10 +1025,10 @@ autoscaler:</p>
 
 <div><pre><code class="language-bash">$ oc create -f machine-autoscale-example.yaml -n openshift-machine-api
 machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-t6m9k created
-machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1b-vr59k created
-machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1c-zkt5t created</code></pre></div>
+machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-vr59k created
+machineautoscaler.autoscaling.openshift.io/autoscale-us-east-1a-zkt5t created</code></pre></div>
 
-<h3 id="toc_12">Define a <code>ClusterAutoscaler</code></h3>
+<h3 id="toc_13">Define a <code>ClusterAutoscaler</code></h3>
 
 <p>Next we need to define a <code>ClusterAutoscaler</code>, this configures some boundaries
 and behaviors for how the cluster will autoscale. An example definition file
@@ -1023,7 +1055,7 @@ clusterautoscaler.autoscaling.openshift.io/default created</code></pre></div>
 the cluster scope.</p>
 </blockquote>
 
-<h3 id="toc_13">Define a <code>Job</code></h3>
+<h3 id="toc_14">Define a <code>Job</code></h3>
 
 <p>The following example YAML file defines a <code>Job</code>:</p>
 
@@ -1045,7 +1077,7 @@ much capacity to trigger an autoscaling event. Make sure you have no more than
 Created project autoscale-example
 Now using project &quot;autoscale-example&quot; on server &quot;https://api.beta-190305-1.ocp4testing.openshiftdemos.com:6443&quot;.</code></pre></div>
 
-<h3 id="toc_14">Open Grafana</h3>
+<h3 id="toc_15">Open Grafana</h3>
 
 <p>In the OpenShift web console, click <code>Monitoring</code> and then click <code>Dashboards</code>.
 This will open a new browser tab for Grafana. You will also get a certificate
@@ -1063,7 +1095,7 @@ you can observe the CPU utilization of the cluster rise:</p>
 
 <p><center><img src="img/grafana.png"/></center></p>
 
-<h3 id="toc_15">Force an Autoscaling Event</h3>
+<h3 id="toc_16">Force an Autoscaling Event</h3>
 
 <p>Now we&#39;re ready to create the <code>Job</code>:</p>
 
@@ -1128,7 +1160,7 @@ beta-190305-1-79tf5-worker-us-east-1c-cdhth   i-09fbcd1c536f2a218   running   m4
 otherwise the interesting things happening might get drowned out by the rest
 of the baseline.</p>
 
-<h1 id="toc_16">OpenShift Infrastructure Nodes</h1>
+<h1 id="toc_17">OpenShift Infrastructure Nodes</h1>
 
 <p>In this section we&#39;re going to look at the OpenShift infrastructure nodes, and more specifically how to scale them once they&#39;ve been deployed. To understand what we mean by &quot;infrastructure node&quot;, the nodes running the following services would fall into that description, although this is not necessarily an exhaustive list:</p>
 
@@ -1175,9 +1207,9 @@ openshift-machine-api   cluster-8145-5nvqd-worker-ap-southeast-1c-s9tr5   i-0380
 
 <p>In both of these outputs you&#39;ll note that both of the outputs have roles listed, and these are associated to <strong>kubernetes labels</strong> for scheduling purposes; we have two types of role defined, <strong>master</strong>, and <strong>worker</strong>. With the exception of <strong>master</strong> nodes (due to specific scheduling and deployment limitations), all other node types are deployed as part of a <code>MachineSet</code>, and can therefore be scaled as one.</p>
 
-<h2 id="toc_17">More MachineSet Details</h2>
+<h2 id="toc_18">More MachineSet Details</h2>
 
-<p>In the previous section you explored the
+<p>In <a href="04-scaling-cluster.md">the previous section</a> you explored the
 <code>MachineSets</code> resource and scaled the cluster by changing its replica count, adding additional workers, we also configured an auto scaler to ensure that the cluster would have the required capacity to accommodate the workload demand. You&#39;ll note that right now we only have <strong>worker</strong> type machine sets configured: </p>
 
 <div><pre><code class="language-bash">$ oc get machinesets -n openshift-machine-api
@@ -1186,7 +1218,7 @@ cluster-8145-5nvqd-worker-ap-southeast-1a   1         1         1         1     
 cluster-8145-5nvqd-worker-ap-southeast-1b   1         1         1         1           12h
 cluster-8145-5nvqd-worker-ap-southeast-1c   1         1         1         1           12h</code></pre></div>
 
-<p>Here we have three distinct machine sets deployed, each with a <strong>single</strong> machine running. Each machine set is aligned with a given AWS EC2 availability zone, and we could easily deploy additional machines (or nodes) into one of the three listed (<code>1a</code>, <code>1b</code> and <code>1c</code>).
+<p>Here we have three distinct machine sets deployed, each with a <strong>single</strong> machine running. Each machine set is aligned with a given AWS EC2 availability zone, and we could easily deploy additional machines (or nodes) into one of the three listed (<code>1a</code>, <code>1b</code> and <code>1c</code>). 
 If we wanted to add additional capacity to our cluster we could adjust the replica count like we did in the previous lab, remembering that we randomly selected one of the machine sets in the overall configuration, but that&#39;s just for worker nodes, i.e. where our user applications run, and where <strong>some</strong> of the key infrastructure components run by default, e.g. our routers, etc.</p>
 
 <p>If we wanted to create a dedicated infrastructure role where we could run specific infrastructure services, components, and pods on (and move them away from the <strong>worker</strong> nodes like they are by default), we would need to create an additional set of nodes, define a <code>MachineSet</code> to deploy and scale them into, and then label them with specific <strong>kubernetes labels</strong>. We can then configure the various components to run specifically on nodes with those labels.</p>
@@ -1223,7 +1255,7 @@ spec:
 
 <p>There are a few very important sections in the output, we&#39;ll discuss them in depth below...</p>
 
-<h3 id="toc_18">Metadata</h3>
+<h3 id="toc_19">Metadata</h3>
 
 <p>The <code>metadata</code> on the <code>MachineSet</code> itself includes information like the name
 of the <code>MachineSet</code> and various labels:</p>
@@ -1245,7 +1277,7 @@ of the <code>MachineSet</code> and various labels:</p>
 <p><strong>NOTE</strong>: You might see some <code>annotations</code> on your <code>MachineSet</code> if you use the <code>MachineSet</code> that you defined a <code>MachineAutoScaler</code> on in the previous lab section.</p>
 </blockquote>
 
-<h3 id="toc_19">Selector</h3>
+<h3 id="toc_20">Selector</h3>
 
 <p>The <code>MachineSet</code> defines how to create <code>Machines</code>, and the <code>Selector</code> tells
 the operator which machines are associated with the set, note that <code>replicas: 1</code> is set here, hence we only have one machine in this set running:</p>
@@ -1260,7 +1292,7 @@ the operator which machines are associated with the set, note that <code>replica
 <p>In this case, the cluster name is <code>8145-5nvqd</code> and there is an additional
 label for the whole set.</p>
 
-<h3 id="toc_20">Template Metadata</h3>
+<h3 id="toc_21">Template Metadata</h3>
 
 <p>The <code>template</code> section is the part of the <code>MachineSet</code> that specifically templates out the
 <code>Machine</code>. The <code>template</code> itself can have metadata associated, and we need to make sure that things match here when we make changes:</p>
@@ -1274,9 +1306,9 @@ label for the whole set.</p>
         machine.openshift.io/cluster-api-machine-type: worker
         machine.openshift.io/cluster-api-machineset: cluster-8145-5nvqd-worker-ap-southeast-1a</code></pre></div>
 
-<h3 id="toc_21">Template Spec</h3>
+<h3 id="toc_22">Template Spec</h3>
 
-<p>The <code>template</code> needs to specify how the <code>Machine</code>/node should be created, i.e. &quot;use this configuration for all machines in this set&quot;; this configuration will be used when provisioning new systems when scaling is required. You will notice that the <code>spec</code> and, more specifically, the <code>providerSpec</code> contains all of the important AWS data to help get the <code>Machine</code> created
+<p>The <code>template</code> needs to <code>spec</code>ify how the <code>Machine</code>/node should be created, i.e. &quot;use this configuration for all machines in this set&quot;; this configuration will be used when provisioning new systems when scaling is required. You will notice that the <code>spec</code> and, more specifically, the <code>providerSpec</code> contains all of the important AWS data to help get the <code>Machine</code> created
 correctly and bootstrapped.</p>
 
 <p>In our case, we want to ensure that the resulting node inherits one or more
@@ -1325,16 +1357,16 @@ additional labels to the node.</p>
 <p><strong>NOTE</strong>: As you can probably see, there&#39;s plenty of AWS-specific provider configuration here, in future versions of OpenShift, there will be similar respective parameters for other infrastructure providers that can be used.</p>
 </blockquote>
 
-<h2 id="toc_22">Defining a Custom MachineSet</h2>
+<h2 id="toc_23">Defining a Custom MachineSet</h2>
 
 <p>In this section we&#39;re going to be defining a custom <code>MachineSet</code> for infrastructure services. Now that you&#39;ve inspected an existing <code>MachineSet</code> it&#39;s time to go over the
 rules for creating one, at least for a simple change like we&#39;re making:</p>
 
 <ol>
 <li>Don&#39;t change anything in the <code>providerSpec</code></li>
-<li>Don&#39;t change any instances of <code>machine.openshift.io/cluster-api-cluster: &lt;clusterid&gt;</code></li>
+<li>Don&#39;t change any instances of <code>sigs.k8s.io/cluster-api-cluster: &lt;clusterid&gt;</code></li>
 <li>Give your <code>MachineSet</code> a unique <code>name</code></li>
-<li>Make sure any instances of <code>machine.openshift.io/cluster-api-machineset</code> match the <code>name</code></li>
+<li>Make sure any instances of <code>sigs.k8s.io/cluster-api-machineset</code> match the <code>name</code></li>
 <li>Add labels you want on the nodes to <code>.spec.template.spec.metadata.labels</code></li>
 <li>Even though you&#39;re changing <code>MachineSet</code> <code>name</code> references, be sure not to change the <code>subnet</code>.</li>
 </ol>
@@ -1351,7 +1383,7 @@ one of your existing <code>MachineSets</code> to a file, remembering to adjust t
 
 <p>Let&#39;s now take some steps to adapt this <code>MachineSet</code> to suit our required new <strong>infrastructure</strong> node type...</p>
 
-<h3 id="toc_23">Clean It</h3>
+<h3 id="toc_24">Clean It</h3>
 
 <p>Since we asked OpenShift to tell us about an <em>existing</em> <code>MachineSet</code>, there&#39;s a
 lot of extra data that we can immediately remove from the file. Remove the following:</p>
@@ -1369,7 +1401,7 @@ lot of extra data that we can immediately remove from the file. Remove the follo
 <li><p>All instances of <code>creationTimestamp</code>.</p></li>
 </ol>
 
-<h3 id="toc_24">Name It</h3>
+<h3 id="toc_25">Name It</h3>
 
 <p>Go ahead and change the top-level <code>.metadata.name</code> to something indicative of
 the purpose of this set, for example:</p>
@@ -1380,13 +1412,13 @@ the purpose of this set, for example:</p>
 infrastructure-focused <code>Machines</code> (nodes) in <code>ap-southeast-1</code> region in the <code>a</code>
 availability zone. Ultimately, you can call this anything you like, but we should change this to something that makes sense for your cluster.</p>
 
-<h3 id="toc_25">Match It</h3>
+<h3 id="toc_26">Match It</h3>
 
-<p>Change any instance of <code>machine.openshift.io/cluster-api-machineset</code> to match your new
+<p>Change any instance of <code>sigs.k8s.io/cluster-api-machineset</code> to match your new
 name of <code>infrastructure-ap-southeast-1a</code> (or whatever you&#39;re using). This appears in both
 <code>.spec.selector.matchLabels</code> as well as <code>.spec.template.metadata.labels</code>.</p>
 
-<h3 id="toc_26">Add Your Node Label</h3>
+<h3 id="toc_27">Add Your Node Label</h3>
 
 <p>Add a <code>labels</code> section to <code>.spec.template.spec.metadata</code> with the label
 <code>node-role.kubernetes.io/infra: &quot;&quot;</code>. Why this particular label?
@@ -1414,14 +1446,14 @@ are also infrastructure nodes (the quotes are because of the boolean). </p>
         labels:
           node-role.kubernetes.io/infra: &quot;&quot;</code></pre></div>
 
-<h3 id="toc_27">Set the replica count</h3>
+<h3 id="toc_28">Set the replica count</h3>
 
 <p>For now, make the replica count 1, which it should be already, unless you didn&#39;t change it from a previous lab instruction:</p>
 
 <div><pre><code class="language-YAML">spec:
   replicas: 1</code></pre></div>
 
-<h3 id="toc_28">Change the Instance Type</h3>
+<h3 id="toc_29">Change the Instance Type</h3>
 
 <p>If you want a different EC2 instance type, you can change that. It is one of
 the few things in the <code>providerSpec</code> block you can realistically change. You
@@ -1430,7 +1462,7 @@ additional volumes on your instances.</p>
 
 <p>Save your file and exit.</p>
 
-<h3 id="toc_29">Double Check</h3>
+<h3 id="toc_30">Double Check</h3>
 
 <p>Your cluster will have a different ID and you are likely operating in a
 different version, however, your file should more or less look like the
@@ -1504,7 +1536,7 @@ spec:
       versions:
         kubelet: &quot;&quot;</code></pre></div>
 
-<h2 id="toc_30">Create Your Machineset</h2>
+<h2 id="toc_31">Create Your Machineset</h2>
 
 <p>Now you can create your <code>MachineSet</code> from the definition that we created:</p>
 
@@ -1547,7 +1579,7 @@ ip-10-0-157-229.ap-southeast-1.compute.internal   Ready     master         15h  
 ip-10-0-164-113.ap-southeast-1.compute.internal   Ready     master         15h       v1.12.4+4dd65df23d
 ip-10-0-168-95.ap-southeast-1.compute.internal    Ready     worker         15h       v1.12.4+4dd65df23d</code></pre></div>
 
-<h2 id="toc_31">Check the Labels</h2>
+<h2 id="toc_32">Check the Labels</h2>
 
 <p>In our case, the youngest node was named
 <code>ip-10-0-131-124.ap-southeast-1.compute.internal</code>, so we can ask what its labels
@@ -1561,7 +1593,7 @@ ip-10-0-131-124.ap-southeast-1.compute.internal   Ready     infra,worker   7m5s 
 will also see <code>infra,worker</code> in the output of <code>oc get node</code> in the <code>ROLES</code>
 column. Success!</p>
 
-<h2 id="toc_32">Add More Machinesets (or scale, or both)</h2>
+<h2 id="toc_33">Add More Machinesets (or scale, or both)</h2>
 
 <p>In a realistic production deployment, you would want at least 3 <code>MachineSets</code>
 to hold infrastructure components. Both the logging aggregation solution and
@@ -1590,7 +1622,7 @@ instances, and then <code>oc get machine</code> and <code>oc get node</code> as 
 forget the <code>-n openshift-machine-api</code> or be sure to switch to that namespace
 with <code>oc project openshift-machine-api</code>.</p>
 
-<h1 id="toc_33">Moving Infrastructure Components</h1>
+<h1 id="toc_34">Moving Infrastructure Components</h1>
 
 <p>Now that we have provisioned some infrastructure specific nodes, it&#39;s time to move various
 infrastructure components onto them, i.e. move them away from the worker nodes, and onto the fresh systems. Let&#39;s go through some of them individually to see how they can be moved, and how to monitor the progress.</p>
@@ -1599,7 +1631,7 @@ infrastructure components onto them, i.e. move them away from the worker nodes, 
 <p><strong>NOTE</strong>: The following assumes that you used at least version <code>0.14.1</code> of the installer. Which would result in a minimum <code>clusterversion</code> of <code>4.0.0-0.7</code>.</p>
 </blockquote>
 
-<h2 id="toc_34">Router</h2>
+<h2 id="toc_35">Router</h2>
 
 <p>The OpenShift router is deployed, maintained, and scaled by an <code>Operator</code> called
 <code>openshift-ingress-operator</code>. Its <code>Pod</code> lives in the
@@ -1719,7 +1751,7 @@ ip-10-0-142-239.ap-southeast-1.compute.internal   Ready     infra,worker   19m  
 
 <p>Success! Our pods have been automatically redeployed onto the infrastructure nodes.</p>
 
-<h2 id="toc_35">Container Image Registry</h2>
+<h2 id="toc_36">Container Image Registry</h2>
 
 <p>The registry uses a similar <code>CRD</code> (Custom Resource Definition) mechanism to configure how the operator deploys the actual registry pods. That CRD is
 <code>configs.imageregistry.operator.openshift.io</code>. You will need to edit the <code>cluster</code> CR
@@ -1822,7 +1854,7 @@ ip-10-0-131-124.ap-southeast-1.compute.internal   Ready     infra,worker   67m  
 namespaced -- it is cluster scoped. There is only one internal/integrated
 registry per OpenShift cluster that serves all projects.</p>
 
-<h2 id="toc_36">Monitoring</h2>
+<h2 id="toc_37">Monitoring</h2>
 
 <p>The Cluster Monitoring operator is responsible for deploying and managing the
 state of the Prometheus+Grafana+AlertManager cluster monitoring stack. It is
@@ -1898,7 +1930,7 @@ grafana-5fc5979587-bdkcd                       0/2       Pending             0  
 <p><strong>NOTE</strong>: You can also run <code>watch &#39;oc get pod -n openshift-monitoring&#39;</code> as an alternative.</p>
 </blockquote>
 
-<h1 id="toc_37">Extensions to OpenShift using OperatorHub</h1>
+<h1 id="toc_38">Extensions to OpenShift using OperatorHub</h1>
 
 <p>OpenShift 4 has a slimmer base, with the ability to easily extend it with
 Operators for both cluster services (networking, storage, logging) and
@@ -1914,10 +1946,10 @@ the cluster through the Developer Catalog.</p>
 
 <ul>
 <li>Red Hat Products - licensed software that is tested extensively on OpenShift 4.</li>
-<li>Certified Partners - partners that have certified their applications for
-OpenShift and have established a mutual support SLA with Red Hat, in order to
+<li>Certified Partners - partners that have certified their applications for 
+OpenShift and have established a mutual support SLA with Red Hat, in order to 
 provide you with the best experience.</li>
-<li>Community - a set of curated Operators built by the Kubernetes community and
+<li>Community - a set of curated Operators built by the Kubernetes community and 
 work well with the Operator Lifecycle Management software already installed
 on your cluster.</li>
 </ul>
@@ -1925,7 +1957,7 @@ on your cluster.</li>
 <p>In this example we&#39;re going to deploy Couchbase through the Operator framework
 in OpenShift 4; Couchbase is a powerful NoSQL database implementation.</p>
 
-<h2 id="toc_38">Create a Project</h2>
+<h2 id="toc_39">Create a Project</h2>
 
 <p>Before you get started, create a project for what you&#39;re about to do with
 Couchbase. You can either do it from the command line:</p>
@@ -1935,7 +1967,7 @@ Now using project &quot;mycouchbase&quot; on server &quot;https://api.cluster-73
 
 <p>...or from the web console.</p>
 
-<h2 id="toc_39">Installing an Extension</h2>
+<h2 id="toc_40">Installing an Extension</h2>
 
 <p>Installing your first Operator is best done through the user interface, but
 can also be driven by the command line. Let&#39;s complete this section using the
@@ -1968,7 +2000,7 @@ things like updates, enhancements, bug fixes, and other changes to the
 solution that the operator deploys. There are a number of options that you need
 to be aware of when deploying an Operator:</p>
 
-<h3 id="toc_40">Installation Mode</h3>
+<h3 id="toc_41">Installation Mode</h3>
 
 <p>Operators can be enabled for all Projects across the cluster or only within
 specific namespaces. Not all Operators support each of these installation
@@ -1976,13 +2008,13 @@ methods. The Couchbase operator only supports installation for a specific
 namespace. Make sure <code>mycouchbase</code> is selected to match the project you
 created earlier.</p>
 
-<h3 id="toc_41">Update Channel</h3>
+<h3 id="toc_42">Update Channel</h3>
 
 <p>Each Operator publisher can create channels for their software, to give
-administrators more control over the versions that are installed. In this
+adminsitrators more control over the versions that are installed. In this
 case, Couchbase only has a &quot;preview&quot; channel.</p>
 
-<h3 id="toc_42">Update Approval Strategy</h3>
+<h3 id="toc_43">Update Approval Strategy</h3>
 
 <p>If Operator creators enable their operators to update the deployed solutions,
 Operator Lifecycle Manager is able to automatically apply those updates.
@@ -2010,7 +2042,7 @@ openshift-marketplace     installed-certified-mycouchbase-654bb64bc5-w8b9g      
 <p>You will likely see the Couchbase operator pod in <code>ContainerCreating</code> status
 if you look very soon after finishing the installation/subscription process.</p>
 
-<h2 id="toc_43">Removing Limits</h2>
+<h2 id="toc_44">Removing Limits</h2>
 
 <p>As part of the SKO bootstrap process, we set some limits on the amount of resources that our cluster can consume on a per-project basis. Leaving these limits in-place will cause our CouchBase Cluster to fail to initialise. Let&#39;s remove this before we proceed any further...</p>
 
@@ -2021,7 +2053,7 @@ limitrange &quot;mycouchbase-core-resource-limits&quot; deleted</code></pre></di
 <p><strong>NOTE</strong>: Make sure that you run that command before proceeding!</p>
 </blockquote>
 
-<h2 id="toc_44">Using Secrets</h2>
+<h2 id="toc_45">Using Secrets</h2>
 
 <p>The Couchbase operator is capable of installing and managing a Couchbase
 cluster for you. But, before it can do that, it has a <a href="https://docs.couchbase.com/operator/1.1/couchbase-cluster-config.html#authsecret" target="_blank">prerequisite for a
@@ -2065,7 +2097,7 @@ command:</p>
 <p>Ultimately, you want a secret with the username <code>couchbase</code> and the password
 <code>securepassword</code> (both examples above use that).</p>
 
-<h2 id="toc_45">Using an Installed Operator</h2>
+<h2 id="toc_46">Using an Installed Operator</h2>
 
 <p>Regular users will use the &quot;<strong>Developer Catalog</strong>&quot; menu to add shared apps,
 services, or source-to-image builders to projects. Let&#39;s explore that interface
@@ -2125,7 +2157,7 @@ has a status of &quot;<strong>Creating</strong>&quot;:</p>
 <p><img src="img/cluster-creating.png" style="width: 1000px;"/></p></li>
 </ol>
 
-<h3 id="toc_46">View the Deployed Resources</h3>
+<h3 id="toc_47">View the Deployed Resources</h3>
 
 <p>Navigate to the Couchbase Cluster that was deployed by clicking <code>cb-example</code>,
 and then click on the &quot;<strong>Resources</strong>&quot; tab. This collects all of the objects
@@ -2159,7 +2191,7 @@ right ones:</p>
 <p>In the above, you should see 3 nodes listed for each function. We&#39;ll dynamically
 modify this in the next section.</p>
 
-<h3 id="toc_47">Re-Configure the Cluster with the Operator</h3>
+<h3 id="toc_48">Re-Configure the Cluster with the Operator</h3>
 
 <p>Keep the Couchbase dashboard up, but select the <strong>Servers</strong> link on the
 left-hand side, it should look like the following:</p>
@@ -2194,7 +2226,7 @@ Couchbase via the web console, or you can use:</p>
 <p>A few things will happen:</p>
 
 <ul>
-<li>The Operator will detect the difference between the desired state and the
+<li>The Operator will detect the difference between the desired state and the 
 current state</li>
 <li>A new Pod will be created and show up under &quot;Resources&quot;</li>
 <li>The Couchbase dashboard will show 4 instances once the Pod is created</li>
@@ -2216,10 +2248,10 @@ the new topology of the cluster. This is one of many advanced feautres embedded
 within applications in OperatorHub to save you time when administering your
 workloads.</p>
 
-<h3 id="toc_48">Delete the Couchbase Instance</h3>
+<h3 id="toc_49">Delete the Couchbase Instance</h3>
 
 <p>After you are done, delete the <code>cb-example</code> Couchbase instance and the
-Operator will clean up all of the resources that were deployed. Remember to
+Opeator will clean up all of the resources that were deployed. Remember to
 delete the Route that we manually created as well. Remember to delete the
 Operator instance and not to delete the Pods or other resources directly --
 the operator will immediately try to fix that thinking that there&#39;s a
@@ -2262,7 +2294,7 @@ also delete the project if you wish.</p>
 <div><pre><code class="language-bash">$ oc project default
 Now using project &quot;default&quot; on server &quot;https://api.cluster-7316.7316.sandbox222.opentlc.com:6443&quot;.</code></pre></div>
 
-<h1 id="toc_49">OpenShift 4 as a Developer</h1>
+<h1 id="toc_50">OpenShift 4 as a Developer</h1>
 
 <p>In this section we&#39;re aiming to get you familiar with Red Hat OpenShift Container Platform 4.0 from a developer perspective, using container-native developer tooling to develop and deploy a sample app with Red Hat Middleware. It&#39;s comprised of a number of individual steps inside of this section that will run you through some of the more common tasks:</p>
 
@@ -2275,7 +2307,7 @@ Now using project &quot;default&quot; on server &quot;https://api.cluster-7316.7
 
 <p>We feel that giving you a hands-on overview of developing apps on OpenShift will be a lot more beneficial than just delivering slideware. We want to make sure that you know how the components fit together, and how to use it. We will use a combination of command-line tools (<code>oc</code>, <code>odo</code>) and interaction via the OpenShift Web Console and CodeReady Workspaces.</p>
 
-<h1 id="toc_50">Install Operators</h1>
+<h1 id="toc_51">Install Operators</h1>
 
 <p>In this lab we will use CodeReady to create and work with a sample app based on <a href="https://developers.redhat.com/products/datagrid/overview/" target="_blank">Red Hat Data Grid</a>. To get access to CodeReady and Data Grid services, you need to point to a special repo containing operator catalog entries. Install this catalog using the following <code>oc</code> command, noting that you&#39;ll have to copy from cat to EOF, and paste it in. This will create a custom <em>OperatorSource</em> object that will bring in the Operator catalog items needed for this workshop and make it available via OperatorHub:</p>
 
@@ -2297,7 +2329,7 @@ EOF</code></pre></div>
 
 <div><pre><code class="language-bash">operatorsource.marketplace.redhat.com/sko-operators created</code></pre></div>
 
-<h1 id="toc_51">Create project</h1>
+<h1 id="toc_52">Create project</h1>
 
 <p>Let&#39;s first create a developer project. Use the OpenShift Web Console, navigate to <em>Home</em> &gt; <em>Projects</em>, and click <em>Create Project</em> to create a new project named <code>skodemo</code>:</p>
 
@@ -2305,7 +2337,7 @@ EOF</code></pre></div>
 
 <p>Alternatively, if you&#39;re more comfortable with the CLI, you can do it with <code>oc new-project skodemo</code>.</p>
 
-<h1 id="toc_52">Install Red Hat Data Grid</h1>
+<h1 id="toc_53">Install Red Hat Data Grid</h1>
 
 <p>In our new project we will first deploy Red Hat Data Grid, a high performance, distributed data grid which our sample application will use for its reactive capabilities. Navigate to <em>Catalog</em> &gt; <em>Operator Hub</em> in the OpenShift Console.</p>
 
@@ -2327,7 +2359,7 @@ EOF</code></pre></div>
 
 <p><img src="img/datagrid-pods.png" style="width: 1000px;"/></p>
 
-<h1 id="toc_53">Install CodeReady</h1>
+<h1 id="toc_54">Install CodeReady</h1>
 
 <p>CodeReady is Red Hat&#39;s browser-based intelligent developer IDE. We&#39;ll use the CodeReady operator to deploy CodeReady so that we can use it in our project to develop our apps.</p>
 
@@ -2359,7 +2391,7 @@ postgres-6d69656d56-hzn9t    1/1       Running     0          22m</code></pre></
 
 <p>Be sure to wait for all of these to be ready and <em>Running</em> before continuing, noting that the operator should show &#39;Completed&#39; when it&#39;s done its job of deployment for us, so don;t worry about that one... </p>
 
-<h1 id="toc_54">Install Custom Stack</h1>
+<h1 id="toc_55">Install Custom Stack</h1>
 
 <p>CodeReady comes with several out-of-the-box <em>stacks</em> for different developer scenarios, but we want to create a custom stack that will give us access to a few custom tools within our workspaces. </p>
 
@@ -2507,7 +2539,7 @@ http://codeready-codeready.apps.cluster-7316.7316.sandbox222.opentlc.com/swagger
 
 <p><img src="img/post-output.png" style="width: 1000px;" border=1/></p>
 
-<h1 id="toc_55">Create CodeReady Workspace with custom Java stack</h1>
+<h1 id="toc_56">Create CodeReady Workspace with custom Java stack</h1>
 
 <p>CodeReady has the concept of <em>Workspaces</em> which are team collaboration areas for different projects. Let&#39;s create a new Workspace and base it on our new stack we created. Navigate back to the CodeReady homepage; if you don&#39;t still have it you can find it at this URL:</p>
 
@@ -2518,7 +2550,7 @@ http://codeready-codeready.apps.cluster-7316.7316.sandbox222.opentlc.com</code><
 
 <p><img src="img/new-workspace.png" style="width: 1000px;"/></p>
 
-<h1 id="toc_56">Workaround for bug </h1>
+<h1 id="toc_57">Workaround for bug </h1>
 
 <p><a href="https://github.com/eclipse/che/issues/12889" target="_blank">This bug</a> prevents CodeReady Workspaces from starting up the first time on OCP 4. On the CodeReady main page, click on <strong>Workspaces (1)</strong>, and then click the &quot;Stop&quot; button (square shape) next to your new workspace:</p>
 
@@ -2542,7 +2574,7 @@ http://codeready-codeready.apps.cluster-7316.7316.sandbox222.opentlc.com</code><
 
 <p><img src="img/project-expand.png" style="width: 1000px;"/></p>
 
-<h1 id="toc_57">Configure project</h1>
+<h1 id="toc_58">Configure project</h1>
 
 <p>Open the sample application&#39;s configuration file at <code>src/main/resources/application.properties</code>. This file contains default values which need to be changed to work in our environment. </p>
 
@@ -2559,7 +2591,7 @@ spells.filename = hp_spells.csv</code></pre></div>
 
 <p><img src="img/copy-code.png" style="width: 1000px;"/></p>
 
-<h1 id="toc_58">Test locally</h1>
+<h1 id="toc_59">Test locally</h1>
 
 <p>Typically you will want to test your code first, before deploying to OpenShift. On the top menu bar (where it has Workspace, Project Edit, etc) you&#39;ll see a big blue &quot;Play&quot; button; select that and choose <strong>Build and Run Locally</strong>. It will take a minute or two to download dependencies, then it should be ready when you start seeing log file messages in the bottom right corner of the window like:</p>
 
@@ -2573,13 +2605,13 @@ spells.filename = hp_spells.csv</code></pre></div>
 
 <p><img src="img/magic.png" style="width: 1000px;" border=1/></p>
 
-<p>This provides a link to a dynamically-created OpenShift route that is created for our containerized development environment in which our sample app is running. Click on the Preview URL to open the link in your Browser. You should see the sample UI in your browser, along with a running list of spells cast:</p>
+<p>This provides a link to a dynamically-created OpenShift route that is created for our containerised development environment in which our sample app is running. Click on the Preview URL to open the link in your Browser. You should see the sample UI in your browser, along with a running list of spells cast:</p>
 
 <p><img src="img/magic2.png" style="width: 1000px;"/></p>
 
 <p>Keep this browser window visible for the next section!</p>
 
-<h1 id="toc_59">Try out Live Reload</h1>
+<h1 id="toc_60">Try out Live Reload</h1>
 
 <p>One of the features of the Quarkus project is the ability to Live Reload very quickly, even for Java projects. Return to the tab where your CodeReady Workspace is running and open the file <code>src/main/java/org/infinispan/hp/HogwartsMagicWebSocket.java</code> and look at line 58, and change the log file message from &quot;execute&quot; to &quot;cast&quot;:</p>
 
@@ -2593,9 +2625,9 @@ spells.filename = hp_spells.csv</code></pre></div>
 
 <p>Now that we&#39;ve confirmed our app works well &quot;locally&quot;, let&#39;s deploy it using the <code>odo</code> CLI. OpenShift Do (<code>odo</code>) is a CLI tool for developers who are writing, building, and deploying applications on OpenShift. With odo, developers get an opinionated CLI tool that supports fast, iterative development which abstracts away Kubernetes and OpenShift concepts, thus allowing them to focus on what&#39;s most important to them: code.</p>
 
-<h1 id="toc_60">Deploy using <code>odo</code></h1>
+<h1 id="toc_61">Deploy using <code>odo</code></h1>
 
-<p>CodeReady Workspaces provides pre-created <em>stacks</em> which give developers the languages, frameworks, and tools they need to be highly productive in a containerized environment. We&#39;ll be using a couple of command line tools. You&#39;re probably familiar with <code>oc</code>, and we&#39;ll also use <code>odo</code> (OpenShift DO!) to work with our development projects. </p>
+<p>CodeReady Workspaces provides pre-created <em>stacks</em> which give developers the languages, frameworks, and tools they need to be highly productive in a containerised environment. We&#39;ll be using a couple of command line tools. You&#39;re probably familiar with <code>oc</code>, and we&#39;ll also use <code>odo</code> (OpenShift DO!) to work with our development projects. </p>
 
 <p>To login with <code>oc</code>, Click on Terminal at the bottom of the CodeReady screen to open the Terminal, you can also re-size the terminal window to make it easier to use:</p>
 
@@ -2612,7 +2644,7 @@ spells.filename = hp_spells.csv</code></pre></div>
 <p>Use the standard username and password combination for the admin user that you were provided with previously.</p>
 
 <blockquote>
-<p><strong>NOTE</strong>: You can find your API endpoint by returning to the GuidGrabber page <a href="https://www.opentlc.com/gg/gg.cgi?profile=generic_sko" target="_blank">here</a>.</p>
+<p><strong>NOTE</strong>: You can find your API endpoint by referring to your email from RHPDS.</p>
 </blockquote>
 
 <p>Next, switch to our development project within OpenShift:</p>
@@ -2666,9 +2698,9 @@ Pushing changes to component: magic
 
 magic-8080 - http://magic-8080-potter-app-skodemo.apps.cluster-7316.7316.sandbox222.opentlc.com</code></pre></div>
 
-<p>This last command will output the URL to our newly created application. Open that URL in your browser (it may take a few minutes to spawn the application properly, so you may get some <code>Application is not available</code> errors... once it&#39;s ready you should get the same UI from before, only this time running within OpenShift as a true containerized application, developed using CodeReady Workspaces, deployed with <code>odo</code>, and using Red Hat Middleware application services to execute its business logic, all within the OpenShift 4 Container Platform. Congratulations!</p>
+<p>This last command will output the URL to our newly created application. Open that URL in your browser (it may take a few minutes to spawn the application properly, so you may get some <code>Application is not available</code> errors... once it&#39;s ready you should get the same UI from before, only this time running within OpenShift as a true containerised application, developed using CodeReady Workspaces, deployed with <code>odo</code>, and using Red Hat Middleware application services to execute its business logic, all within the OpenShift 4 Container Platform. Congratulations!</p>
 
-<h2 id="toc_61">Try Out More Operators</h2>
+<h2 id="toc_62">Try Out More Operators</h2>
 
 <p>Operators are a powerful way for cluster administrators to extend the cluster,
 so that developers can build their apps and services in a self-service way. With
@@ -2678,7 +2710,7 @@ instructure has never been easier.</p>
 <p>OperatorHub will be continually updated with more great Operators from Red Hat,
 certified partners and the Kubernetes community.</p>
 
-<h1 id="toc_62">Configuring Authentication</h1>
+<h1 id="toc_63">Configuring Authentication</h1>
 
 <p>OpenShift 4 installs with two effective superusers out of the box:</p>
 
@@ -2694,11 +2726,11 @@ console (which requires a password). As part of the lab setup, we set the &#39;a
 <p>If you want additional users to be able to authenticate to and use the
 cluster, you must configure an authentication provider. In this example we will configure a basic <code>htpasswd</code> implementation that relies on a specific authentication file that&#39;s hashed for security. Production environments would rely on something much more comprehensive and scalable.</p>
 
-<h2 id="toc_63">Create the htpasswd file</h2>
+<h2 id="toc_64">Create the htpasswd file</h2>
 
 <p>Let&#39;s first create the <code>htpasswd</code> file manually; there&#39;s a number of ways that this can be done but an easy way is to use <code>openssl</code> to do this for us:</p>
 
-<div><pre><code class="language-bash">$ printf &quot;sko2019:$(openssl passwd -apr1 openshift4)\n&quot; &gt;&gt; ~/htpasswd</code></pre></div>
+<div><pre><code class="language-bash">$ printf &quot;sko2019:$(openssl passwd -apr1 openshift4)\n&quot; &gt;&gt; ~/htpasswd&quot;</code></pre></div>
 
 <p>This will create a user called &quot;<strong>sko2019</strong>&quot; with password &quot;<strong>openshift4</strong>&quot;.</p>
 
@@ -2720,7 +2752,7 @@ cluster, you must configure an authentication provider. In this example we will 
 <p><strong>NOTE</strong>: Failure to run the above command will lock your admin user out of the cluster, and you won&#39;t be able to return back to the environment after the lab has ended.</p>
 </blockquote>
 
-<h2 id="toc_64">Create the htpasswd secret</h2>
+<h2 id="toc_65">Create the htpasswd secret</h2>
 
 <p>The authentication operator will read the <code>htpasswd</code> file from a secret in
 the <code>openshift-config</code> project. Go ahead and create that secret using the
@@ -2733,7 +2765,7 @@ secret/htpass-secret created</code></pre></div>
 <p><strong>NOTE</strong>: The above command assumes that <code>htpasswd</code> is the filename that you&#39;re wanting to use, and is in your current working directory. If it&#39;s not, you will need to specify the full location.</p>
 </blockquote>
 
-<h2 id="toc_65">Create the Identity Provider Custom Resource</h2>
+<h2 id="toc_66">Create the Identity Provider Custom Resource</h2>
 
 <p>The operator that configures authentication is looking for a <code>CustomResource</code>
 object. In our case, we want one that tells it to configure htpasswd
@@ -2746,10 +2778,10 @@ metadata:
   name: cluster
 spec:
   identityProviders:
-  - name: my_htpasswd_provider
-    challenge: true
-    login: true
-    mappingMethod: claim
+  - name: my_htpasswd_provider 
+    challenge: true 
+    login: true 
+    mappingMethod: claim 
     type: HTPasswd
     htpasswd:
       fileData:
@@ -2764,7 +2796,7 @@ create the CR for auth with the following command:</p>
 existing <code>OAuth</code> called <code>cluster</code>. The <code>apply</code> command will overwrite/patch
 existing objects.</p>
 
-<h2 id="toc_66">Test Authentication</h2>
+<h2 id="toc_67">Test Authentication</h2>
 
 <p>When you created the CR, the authentication operator reconfigured the cluster
 to use htpasswd authentication. After a few moments, you should be able to
@@ -2781,7 +2813,7 @@ You don&#39;t have any projects. You can try to create a new project, by running
 
     oc new-project &lt;projectname&gt;</code></pre></div>
 
-<h2 id="toc_67">Return to the Admin User</h2>
+<h2 id="toc_68">Return to the Admin User</h2>
 
 <p>Before proceeding with the rest of the instructions, log back in as the administrator using the administrator credentials you were provided with when you installed OpenShift.</p>
 
